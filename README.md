@@ -9,7 +9,6 @@ Resources [Stack Overflow](https://stackoverflow.com/questions/47203397/string-s
 ## Requires
 1. Node Js.
 
-----
 ## How To
 * Clone Repo
 * run ```$ node stringsimilarity.js < data.txt```
