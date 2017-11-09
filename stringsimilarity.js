@@ -1,129 +1,105 @@
+
 function processData(input) {
-// remove \r from input
-input = input.replace(/(\r)/gm,"");
+    //Enter your code here
+    input = input.replace(/(\r)/gm,"");
+    input=input.split("\n");
+    //console.log("array", input)
+    //console.log("\n")
+    //console.log("------------loop through string--------------");
+    //console.log("\r")
 
-//get the array of characters using array.split()
-let arrayOfChars = input.split("\n");
-//console.log("arrayOfChars", arrayOfChars)
-
-let t           = arrayOfChars[0];
-let secondArray = arrayOfChars[1].trim();
-let thirdArray  = arrayOfChars[2];
-
-secondArray = secondArray.replace(/(\n)/gm,"");
-
-// ==============================================
-// Split each letter and put them into arrays
-// ==============================================
-let a       = secondArray.split('');
-let b       = getResultsUsingArrayShift();
-thirdArray  = thirdArray.split('');
-
-
-//console.log(a)
-//console.log(b)
-
-var counts = {};
-
-
-//Solution using array.shift()
-function getResultsUsingArrayShift() {
-  let temp = a.slice(0);
-  let first = temp.shift();
-  // Don't push because doesn't need to check againist itself
-  //temp.push(first);
-  return temp;
-}
-
-
-let result = getDeleteCountUsingDestructive();
-
-function getDeleteCountUsingDestructive() {
-        let aChars = a;
-        let bChars = b;
-        var count   = 0;
-        var letters = [];
-        let total   = 0;
-
-        let g = 0;
-        // Original Array
-        console.log("\n")
-        console.log("------------ORIGINAL ARRAY--------------");
-        console.log("\r")
-        console.log("aChars", aChars);
-        console.log("bChars", bChars);
-        console.log("\r")
-
-
-        for (var i = 0; i <= secondArray.length + 1; i++){
-            console.log(i)
-            if (aChars[0] < bChars[0]) {
-
-                console.log(aChars[0] + " < " + bChars[0])
-
-                bChars.shift();
-
-                let bLength = bChars.length + 1;
-
-                if(bLength === 1 ){
-                    console.log('---------break---------')
-                    break;
-                }
-
-            } else if (aChars[0] > bChars[0]) {
-                
-                console.log(aChars[0] + " > " + bChars[0])
-                bChars.shift();
-                let bLength = bChars.length + 1;
-
-                // if the length of b is 1 break
-                if(bLength === 1 ){
-                    console.log('---------break---------');
-
-                    break;
-                }
+    // Run for thenumber of times of strings    
+    for (var i in input) {
+        if(parseInt(i) !== parseInt(0) ){
+            var index = i++; 
+            //console.log("index", index)
+            checkSimilarities(index);    
+        }
         
-            } else if (bChars[0] === "undefined") {
-                //bChars = t;
-                //console.log("new b array " + bChars[0]);
+    }
 
-            } else {
-                // if both values are equal
-                console.log(aChars[0] + " = " + bChars[0])
-                //console.log("0" + " = " + i + "  (Index Check)")
-               // console.log(i)
 
-                // add one to count
-                count++;
+    function checkSimilarities(index){
+    var str=input[index];
+    var len=input[index].length;
+    var count=0;
+    var sameCharsRow=0;
+    var total=0;
+    var isFirstTime = true;
+            for(i=0;i<len;i++)
+    {
+        // ==============================================
+        // If substring equals prefix
+        // ============================================== 
+        if (str[0] == str[i]) {
+            
+            // ======================================================
+            // j is equal to matched index+ # of matches
+            // loop through each index and see how many times there is a match
+            // ====================================================== 
+            for( j = i + sameCharsRow; j < len; j++){
 
-                // shift equivalent value to the end of b array
-                bChars.shift();
+                //console.log("\r")
+                //console.log("J is equals ", j)  
 
-                //aChars.shift();
-                letters.push(aChars.shift());
-                console.log("letters", letters);
-                console.log("count", count);
+                // ======================================================
+                // If the first integer equals prefix, then add 1
+                // thats determines which index you match the prefix with
+                // on first run
+                // else isFirstTime is false
+                // this is how you check b against a
+                // ====================================================== 
+                if(isFirstTime && str[j] == str[0]){
+                sameCharsRow++;
+                } else {
+                    isFirstTime = false;
+                }
+                
+                //console.log("sameCharsRow: ", sameCharsRow)
+                //console.log("isFirstTime", isFirstTime)
+
+                // Determine # of similarities
+                // first run: if index[ 1-0 ] = [0]
+                //console.log("j - i = ", j - i)
+                //console.log("j = ", j)
+                //console.log(str[j-i] + " = " + str[j])
+                if(str[j-i] == str[j]){
+                    count++;
+                    //console.log("count", count)
+                } else {
+                    break;
+                }
             }
 
-            console.log("----------------------------------------");
+            //console.log("\r")
+            //console.log("============================")
+            //console.log("inner loop is over")
+            //console.log("============================")
+            
+            // if sameChars is greater than 0 subtract 1 and then add it count + 0;
+            if (sameCharsRow > 0) {
+                sameCharsRow--;
+                count += sameCharsRow;
+            }
+            isFirstTime = true;
 
-            console.log("\n")
-            console.log("------------SHIFTED ARRAYS--------------");
-            console.log("\r")
-            console.log("aChars", aChars);
-            console.log("bChars", bChars);
-            console.log("\r")
+        }
 
+        //console.log("\r")
+        //console.log("============================")
+        //console.log("Looping through each index is over")
+        //console.log("============================")
+        //console.log("\r")
 
-        }// CLOSE FOR LOOP
-        total=total+count;
+        //console.log("isFirstTime", isFirstTime)
+        //console.log("count", count)
+    }
+    console.log(count);
 
-        console.log('total', total)
-
-
-    }    //getDeleteCountUsingDestructive
-
-} // CLOSE PROCESS DATA
+    }
+      
+    
+} 
 
 process.stdin.resume();
 process.stdin.setEncoding("ascii");
@@ -135,30 +111,3 @@ process.stdin.on("data", function (input) {
 process.stdin.on("end", function () {
    processData(_input);
 });
-
-
-
-
-/*
-if (aChars[0] < bChars[0]) {
-    //a.push(aChars.shift());
-    } else if (aChars[i] > bChars[i]) {
-      b.push(bChars.shift());
-
-    } else {
-      // both are equivalent shift them both
-      //count++;
-      //aChars.shift();
-      //letters.push(aChars.shift());
-      //console.log("count", count);
-
-    }
-
-    console.log("aChars", aChars);
-    console.log("bChars", bChars);
-    console.log("\n")
-    //console.log("letters", letters);
-
-    }
-console.log(count)
-*/
