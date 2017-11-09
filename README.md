@@ -1,5 +1,7 @@
 
 ## String Similarity - Hackerrank Challenge Node JS
+## Z Algorithm
+
 see [HackerRank](https://www.hackerrank.com/challenges/string-similarity/forum)
 > Challenge is solved but it times out on test case #6 and #7
 
